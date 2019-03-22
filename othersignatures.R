@@ -1,3 +1,6 @@
+######################################################
+#This R file converts each probeset id to ensemble ids from each Gene Signature
+######################################################
 source("http://bioconductor.org/biocLite.R")
 biocLite("geneClassifiers")
 biocLite("biomaRt")
