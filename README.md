@@ -8,7 +8,7 @@
 # 4. Calculation for MMRF.R         
    This R file applys each transferred GSs to MMRF RNAseq datasets
 # 5. cal_prebs2.R
-   This R file converts BAM files to microarray format matrixes
+   This R file converts BAM files to microarray format matrixes (for DFCI and MMRF)
 # 6. Calculation for Prebs DFCI.R
    This R file applys each original gene signature and reduced GSs to Prebs (DFCI converted)
 # 7. Calculation for Prebs MMRF.R
