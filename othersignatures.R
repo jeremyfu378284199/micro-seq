@@ -1,5 +1,3 @@
-load("~/downloads/DFCI_TPM_Survival.Rd")
-row.names(DFCI_TPM_Gene) <- gsub("\\.\\d+","",row.names(DFCI_TPM_Gene))
 source("http://bioconductor.org/biocLite.R")
 biocLite("geneClassifiers")
 biocLite("biomaRt")
@@ -7,7 +5,15 @@ library("geneClassifiers")
 library("biomaRt")
 library(survival)
 library(survC1)
+load("~/downloads/DFCI_TPM_Survival.Rd")
+row.names(DFCI_TPM_Gene) <- gsub("\\.\\d+","",row.names(DFCI_TPM_Gene))
 mart <- useMart(biomart = "ENSEMBL_MART_ENSEMBL", dataset = "hsapiens_gene_ensembl",  host = 'www.ensembl.org',ensemblRedirect = FALSE)
+#import MMRF expression data
+MMRF <- as.matrix(read.table("MMRF_CoMMpass_IA10c_E74GTF_Salmon_Gene_TPM.txt",sep = "\t",row.names = 1,header = TRUE,stringsAsFactors = FALSE ))
+#change the sample names
+colnames(MMRF) <- gsub("_1_BM","",colnames(MMRF))
+#save and load RData
+load("~/Documents/Research/signatures conversion.RData")
 ##################################################
 #EMC92 gene signature  (prebs &mmrf)
 EMC92 <- data.frame(getWeights(getClassifier("EMC92")))
@@ -17,6 +23,10 @@ G_EMC92 <- getBM(attributes = c("affy_hg_u133_plus_2", "hgnc_symbol","ensembl_ge
 common <- intersect(G_EMC92$ensembl_gene_id,rownames(DFCI_TPM_Gene))
 G_EMC92 <- G_EMC92[G_EMC92$ensembl_gene_id %in% common,]
 write.csv(G_EMC92,file = "EMC92_prebs.csv")
+#check common ensembl id numbers for mmrf
+common <- intersect(G_EMC92$ensembl_gene_id,rownames(MMRF))
+G_EMC92 <- G_EMC92[G_EMC92$ensembl_gene_id %in% common,]
+write.csv(G_EMC92,file = "EMC92_mmrf.csv")
 #################################################
 #UAMS70 gene signature
 UAMS70 <- data.frame(getWeights(getClassifier("UAMS70")))
