@@ -1,4 +1,6 @@
-
+###############################################
+#This R file converts BAM files to microarray format matrixes
+###############################################
 library(prebs)
 library("hgu133plus2probe")
 library("hgu133plus2cdf")
